@@ -417,4 +417,274 @@
             right: 25px;
             background: #9C27B0;
             width: 48px;
-            height: 48*
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.5);
+            z-index: 100;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: #BA68C8;
+            transform: translateY(-5px);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            background: rgba(156, 39, 176, 0.1);
+            border-radius: 40px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            color: #aaa;
+        }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .cards-grid { grid-template-columns: repeat(4, 1fr); gap: 22px; }
+        }
+        @media (max-width: 900px) {
+            .cards-grid { grid-template-columns: repeat(3, 1fr); }
+            .logo-text, .logo-emoji { font-size: 3rem; }
+        }
+        @media (max-width: 600px) {
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
+            .logo-text, .logo-emoji { font-size: 2.3rem; }
+            .search-box { max-width: 100%; margin: 0 15px; }
+            .search-box button { padding: 9px 24px; }
+            .search-box input { padding: 12px 8px; }
+        }
+        @media (max-width: 450px) {
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #9C27B0; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">
+                <span class="logo-text">H</span>
+                <span class="logo-emoji">🔥</span>
+                <span class="logo-text">T-HUB</span>
+            </h1>
+            <p class="tagline">BUY HERE • 🔞ONLY CONTENT • DELIVER IN TELEGRAM</p>
+        </div>
+
+        <!-- Search Bar Only -->
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search for products...">
+                <button id="searchBtn">Search</button>
+            </div>
+        </div>
+
+        <div class="cards-grid" id="cardsGrid"></div>
+      <div class="footer">
+            <img class="proof-image" src="https://files.catbox.moe/fklkcn.jpg" alt="Proof" loading="lazy">
+            <div class="footer-copyright">
+                <p>© 2025 H🔥T-HUB | BEST SELLER -50% IN DISCOUNT</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <!-- Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <img class="modal-image" id="modalImage" src="" alt="">
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <button class="modal-close" id="modalClose">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Products - All images use 1280x720 resolution
+        // Cards 13 and 19 have only image (no video)
+        // All borders now use the same violet color (#9C27B0)
+        const products = [
+             { id: 0, name: "VIP CHANNEL $120", image: "https://files.catbox.moe/4448yl.jpg", video: "", hasVideo: false },
+            { id: 1, name: "LIZZY AND BROTHER $35", image: "https://files.catbox.moe/98mah7.webp", video: "https://files.catbox.moe/oendpj.mp4", hasVideo: true },
+            { id: 2, name: "AMELIA BLONDE $35", image: "https://files.catbox.moe/oqs2du.jpg", video: "https://files.catbox.moe/8c2ho1.mp4", hasVideo: true },
+            { id: 3, name: "RAPE & CP $70", image: "https://files.catbox.moe/s4mq7z.jpg", video: "https://files.catbox.moe/7tvadq.mp4", hasVideo: true },
+            { id: 4, name: "CP 1/2 $30", image: "https://files.catbox.moe/znp3kd.webp", video: "https://files.catbox.moe/jqydvb.mp4", hasVideo: true },
+            { id: 5, name: "CP 3/4 $30", image: "https://files.catbox.moe/5cbrfk.webp", video: "https://files.catbox.moe/48qahs.mp4", hasVideo: true },
+            { id: 6, name: "PREMIUM CP $50", image: "https://files.catbox.moe/cvyr4s.jpg",video: "https://files.catbox.moe/3a76l2.mp4", hasVideo: true },
+            { id: 7, name: "UPDATE CP $50", image: "https://files.catbox.moe/2udqt1.jpg", video: "https://files.catbox.moe/hy1aa3.mp4", hasVideo: true },
+            { id: 8, name: "CP FATHER AND DAUGHTER $40", image: "https://files.catbox.moe/z0vnr7.jpg", video: "https://files.catbox.moe/ihwbqz.mp4", hasVideo: true },
+            { id: 9, name: "ALL CP $90", image: "https://files.catbox.moe/zxi54j.webp", video: "", hasVideo: false },
+            { id: 9.5, name: "BIG PROMO 3 FOLDER 50$", image: "https://files.catbox.moe/podg26.jpg", video: "", hasVideo: false },
+            { id: 10, name: "IVANKA $35", image: "https://files.catbox.moe/57ola4.webp", video: "https://files.catbox.moe/bzjmkm.mp4", hasVideo: true },
+            { id: 11, name: "MOM AND SON $45", image: "https://files.catbox.moe/a6do4g.webp", video: "https://files.catbox.moe/xvtq65.mp4", hasVideo: true },
+            { id: 12, name: "IZZY $35", image: "https://files.catbox.moe/3b2hje.webp", video: "https://files.catbox.moe/dv7loq.mp4", hasVideo: true },
+            { id: 13, name: "DARKZADIE $35", image: "https://files.catbox.moe/h88sop.jpg", video: "https://files.catbox.moe/uszdrc.mp4", hasVideo: true },
+            { id: 13, name: "BABY ASHLE $35", image: "https://files.catbox.moe/0i4q5h.jpg", video: "https://files.catbox.moe/bf6uzp.mp4", hasVideo: true },
+            { id: 14, name: "13-17 TEENS $40", image: "https://files.catbox.moe/3332pr.jpg", video: "https://files.catbox.moe/sr5lpb.mp4", hasVideo: true  },
+            { id: 15, name: "ENGLISH TEEN $40", image: "https://files.catbox.moe/bs89kc.jpg", video: "https://files.catbox.moe/927sbu.mp4", hasVideo: true },
+            { id: 16, name: "DESIRE GARCIA $35", image: "https://files.catbox.moe/bkse8m.jpg", video: "https://files.catbox.moe/u8eocl.MP4", hasVideo: true },
+            { id: 17, name: "HIGH SCHOOL THOTS $35", image: "https://files.catbox.moe/wmdc4e.jpg", video: "https://files.catbox.moe/gm5647.mp4", hasVideo: true },
+            { id: 18, name: "ALL TEEN $100", image: "https://files.catbox.moe/d2m39n.jpg", video: "https://www.w3schools.com/html/mov_bbb.mp4", hasVideo: false },
+            { id: 19, name: "SNAPGOD FULL $60", image: "https://files.catbox.moe/wfizot.webp", video: "https://files.catbox.moe/ar337t.mp4", hasVideo: true },
+            { id: 20, name: "BLACKMAIL $55", image: "https://files.catbox.moe/ngsb4p.jpg", video: "", hasVideo: false },
+            { id: 21, name: "ANXIUS PANDA $50", image: "https://files.catbox.moe/o0vlv8.jpg", video: "https://files.catbox.moe/rqwmjl.mp4", hasVideo: true },
+            { id: 22, name: "ALL CONTENT🔥 $200", image: "https://files.catbox.moe/171k24.png", video: "https://www.w3schools.com/html/mov_bbb.mp4", hasVideo: false },
+        ];
+
+
+        let currentSearch = "";
+
+        function sendToTelegram(productName, btnElement) {
+            const originalText = btnElement.textContent;
+            btnElement.textContent = "⏳ SENDING...";
+            btnElement.classList.add("loading");
+            
+            const message = `H🔥T-HUB\n I WANT: ${productName}`;
+            const encodedMessage = encodeURIComponent(message);
+            const telegramLink = `https://t.me/RICHSERVICE19?text=${encodedMessage}`;
+            
+            setTimeout(() => {
+                window.open(telegramLink, "_blank");
+                btnElement.textContent = originalText;
+                btnElement.classList.remove("loading");
+            }, 200);
+        }
+
+        function openModal(product) {
+            document.getElementById('modalImage').src = product.image;
+            document.getElementById('modalTitle').textContent = product.name;
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = '';
+            
+            const filtered = products.filter(p => {
+                return p.name.toLowerCase().includes(currentSearch.toLowerCase());
+            });
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state">🔍 No products found<br><p>Try a different search term</p></div>';
+                return;
+            }
+            
+            filtered.forEach((product, idx) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.setProperty('--order', idx);
+                
+                let videoHtml = '';
+                if (product.hasVideo && product.video) {
+                    videoHtml = `
+                        <div class="card-video-wrapper">
+                            <div class="card-video">
+                                <video src="${product.video}" controls preload="metadata" muted playsinline></video>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                card.innerHTML = `
+                    <div class="card-image-wrapper">
+                        <img class="card-image" src="${product.image}" alt="${product.name}" loading="lazy">
+                    </div>
+                    ${videoHtml}
+                    <div class="card-content">
+                        <h3 class="card-title">${product.name}</h3>
+                        <button class="get-now-btn" data-name="${product.name}">$ GET NOW $</button>
+                    </div>
+                `;
+                
+                const btn = card.querySelector('.get-now-btn');
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    sendToTelegram(product.name, btn);
+                });
+                
+                const imgElement = card.querySelector('.card-image');
+                imgElement.addEventListener('click', () => openModal(product));
+                imgElement.style.cursor = 'pointer';
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function filterAndRender() {
+            renderCards();
+        }
+
+        // Event listeners
+        document.getElementById('searchBtn').addEventListener('click', () => {
+            currentSearch = document.getElementById('searchInput').value;
+            filterAndRender();
+        });
+        
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                currentSearch = e.target.value;
+                filterAndRender();
+            }
+        });
+        
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        document.getElementById('productModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('productModal')) closeModal();
+        });
+        
+        // Back to top
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) backToTop.classList.add('show');
+            else backToTop.classList.remove('show');
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCards();
+        });
+        
+        // Additional styles to ensure uniform violet borders
+        const style = document.createElement('style');
+        style.textContent = `
+            .card-image { border: 2px solid #9C27B0 !important; cursor: pointer; }
+            .card-video { border: 2px solid #9C27B0 !important; }
+            .card { border: 2px solid #9C27B0 !important; }
+            .proof-image { border: 2px solid #9C27B0 !important; }
+            .logo-emoji { background: none; color: #ff6600; }
+            .get-now-btn.loading { opacity: 0.6; cursor: wait; }
+            video { background: #000; }
+            .modal-content { border: 2px solid #9C27B0 !important; }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
