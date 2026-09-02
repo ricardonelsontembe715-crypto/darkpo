@@ -387,18 +387,19 @@
         }
 
         .proof-images-container {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            flex-wrap: wrap;
             margin-bottom: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .proof-image {
-            max-width: 280px;
             width: 100%;
             height: auto;
-            aspect-ratio: 1280 - 720;
+            aspect-ratio: 1280 / 720;
             object-fit: cover;
             border-radius: 28px;
             border: 2px solid #9C27B0;
@@ -479,9 +480,11 @@
             .search-box { max-width: 100%; margin: 0 15px; }
             .search-box button { padding: 9px 24px; }
             .search-box input { padding: 12px 8px; }
+            .proof-images-container { grid-template-columns: repeat(2, 1fr); gap: 16px; }
         }
         @media (max-width: 450px) {
             .cards-grid { grid-template-columns: 1fr; }
+            .proof-images-container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
         }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -541,30 +544,30 @@
         // All borders now use the same violet color (#9C27B0)
         const products = [
              { id: 0, name: "VIP CHANNEL $60", image: "https://www.image2url.com/r2/default/files/1788357595764-dd169cc3-6080-4335-9582-9415e4026d68.png", video: "", hasVideo: false },
-            { id: 1, name: "LIZZY AND BROTHER $30", image: "https://files.catbox.moe/98mah7.webp", video: "https://www.image2url.com/r2/default/videos/1788352346124-f35c9d0d-1af5-45c4-bf6d-63adc132698f.mp4", hasVideo: true },
-            { id: 2, name: "AMELIA BLONDE $35", image: "https://www.image2url.com/r2/default/files/1788374980584-86cf2071-b6fe-4852-a4a5-32da2d7ba92a.png", video: "https://www.image2url.com/r2/default/videos/1788352577493-6ab89e18-7663-4a07-a3fa-689ab3af4037.mp4", hasVideo: true },
-            { id: 3, name: "RAPE & CP $30", image: "https://files.catbox.moe/s4mq7z.jpg", video: "https://www.image2url.com/r2/default/videos/1788352672674-01f088ec-c679-48d6-ab56-8575bb23e593.mp4", hasVideo: true },
-            { id: 4, name: "CP 1/2 $25", image: "https://www.image2url.com/r2/default/files/1788375179918-93b360b3-cf7c-4908-9cf5-f889e416a678.png", video: "https://www.image2url.com/r2/default/videos/1788352777997-d79a3913-d130-4a32-b0b6-b314218196e4.mp4", hasVideo: true },
-            { id: 5, name: "CP 3/4 $40", image: "https://www.image2url.com/r2/default/files/1788376045361-973660de-e7c1-429c-92aa-5d77a7ccb45a.png", video: "https://www.image2url.com/r2/default/videos/1788352951486-5bc448ad-a543-4863-b54f-4f7743d9ced9.mp4", hasVideo: true },
-            { id: 6, name: "PREMIUM CP $35", image: "https://www.image2url.com/r2/default/files/1788375239845-217cd3c8-a046-4598-b130-79d3815c7050.png",video: "https://www.image2url.com/r2/default/videos/1788353088212-f5dc8e54-1148-454f-9801-4538598408d5.mp4", hasVideo: true },
-            { id: 7, name: "UPDATE CP $30", image: "https://www.image2url.com/r2/default/files/1788375337361-eab0c5b2-93f2-45c0-9bda-67c52978f667.png", video: "https://www.image2url.com/r2/default/videos/1788353252982-09d07f2b-07b5-411f-bd9c-cf1504f73442.mp4", hasVideo: true },
+            { id: 1, name: "LIZZY AND BROTHER $30", image: "https://files.catbox.moe/98mah7.webp", video: "https://www.image2url.com/r2/default/videos/1788352346124-f35c9d0d-1af5-45c4-bf6d-63adc1[...]
+            { id: 2, name: "AMELIA BLONDE $35", image: "https://www.image2url.com/r2/default/files/1788374980584-86cf2071-b6fe-4852-a4a5-32da2d7ba92a.png", video: "https://www.image2url.com/r2/de[...]
+            { id: 3, name: "RAPE & CP $30", image: "https://files.catbox.moe/s4mq7z.jpg", video: "https://www.image2url.com/r2/default/videos/1788352672674-01f088ec-c679-48d6-ab56-8575bb23e593.mp[...]
+            { id: 4, name: "CP 1/2 $25", image: "https://www.image2url.com/r2/default/files/1788375179918-93b360b3-cf7c-4908-9cf5-f889e416a678.png", video: "https://www.image2url.com/r2/default/v[...]
+            { id: 5, name: "CP 3/4 $40", image: "https://www.image2url.com/r2/default/files/1788376045361-973660de-e7c1-429c-92aa-5d77a7ccb45a.png", video: "https://www.image2url.com/r2/default/v[...]
+            { id: 6, name: "PREMIUM CP $35", image: "https://www.image2url.com/r2/default/files/1788375239845-217cd3c8-a046-4598-b130-79d3815c7050.png",video: "https://www.image2url.com/r2/defaul[...]
+            { id: 7, name: "UPDATE CP $30", image: "https://www.image2url.com/r2/default/files/1788375337361-eab0c5b2-93f2-45c0-9bda-67c52978f667.png", video: "https://www.image2url.com/r2/defaul[...]
             { id: 8, name: "CP FATHER AND DAUGHTER $25", image: "https://files.catbox.moe/z0vnr7.jpg", video: "https://files.catbox.moe/ihwbqz.mp4", hasVideo: true },
             { id: 9, name: "ALL CP $70", image: "https://www.image2url.com/r2/default/files/1788378776727-072243b8-2420-48e7-874b-399f08c39892.png", video: "", hasVideo: false },
             { id: 9.5, name: "BIG PROMO 3 FOLDER 45$", image: "https://www.image2url.com/r2/default/files/1788375435333-33fe9a03-75ae-4359-ab2f-8b2b7e7bb078.png", video: "", hasVideo: false },
-            { id: 10, name: "IVANKA $35", image: "https://www.image2url.com/r2/default/files/1788375707255-54f76a64-27d7-4246-91f9-35a6439fef8a.png", video: "https://files.catbox.moe/bzjmkm.mp4", hasVideo: true },
-            { id: 11, name: "MOM AND SON $35", image: "https://www.image2url.com/r2/default/files/1788375934352-501787b8-b9c5-4055-b60e-8dc5047357b9.png", video: "https://www.image2url.com/r2/default/videos/1788353513984-8294e7b5-2bc9-41fd-a34c-46dbddb2f38d.mp4", hasVideo: true },
-            { id: 12, name: "IZZY $50", image: "https://www.image2url.com/r2/default/images/1788354956928-522fb441-5b8a-4bf8-9255-4ce6e30c8c33.jpg", video: "https://www.image2url.com/r2/default/videos/1788354767205-b472e7a1-7a44-4dd6-8198-db85b394a0c8.mp4", hasVideo: true },
+            { id: 10, name: "IVANKA $35", image: "https://www.image2url.com/r2/default/files/1788375707255-54f76a64-27d7-4246-91f9-35a6439fef8a.png", video: "https://files.catbox.moe/bzjmkm.mp4",[...]
+            { id: 11, name: "MOM AND SON $35", image: "https://www.image2url.com/r2/default/files/1788375934352-501787b8-b9c5-4055-b60e-8dc5047357b9.png", video: "https://www.image2url.com/r2/def[...]
+            { id: 12, name: "IZZY $50", image: "https://www.image2url.com/r2/default/images/1788354956928-522fb441-5b8a-4bf8-9255-4ce6e30c8c33.jpg", video: "https://www.image2url.com/r2/default/v[...]
             { id: 13, name: "DARKZADIE $35", image: "https://files.catbox.moe/h88sop.jpg", video: "https://files.catbox.moe/uszdrc.mp4", hasVideo: true },
             { id: 13, name: "BABY ASHLE $25", image: "https://files.catbox.moe/0i4q5h.jpg", video: "https://files.catbox.moe/bf6uzp.mp4", hasVideo: true },
-            { id: 14, name: "13-17 TEENS $40", image: "https://www.image2url.com/r2/default/files/1788376142309-a71b73f2-8b8e-4a95-854a-b44c647da636.png", video: "https://www.image2url.com/r2/default/videos/1788353707340-4249272a-8c06-448f-a6ce-51ed6be9f1d2.mp4", hasVideo: true  },
-            { id: 15, name: "ENGLISH TEEN $25", image: "https://www.image2url.com/r2/default/files/1788376343424-352808f4-4477-47a3-987d-1167df1913f3.png", video: "https://files.catbox.moe/927sbu.mp4", hasVideo: true },
+            { id: 14, name: "13-17 TEENS $40", image: "https://www.image2url.com/r2/default/files/1788376142309-a71b73f2-8b8e-4a95-854a-b44c647da636.png", video: "https://www.image2url.com/r2/def[...]
+            { id: 15, name: "ENGLISH TEEN $25", image: "https://www.image2url.com/r2/default/files/1788376343424-352808f4-4477-47a3-987d-1167df1913f3.png", video: "https://files.catbox.moe/927sbu[...]
             { id: 16, name: "DESIRE GARCIA $30", image: "https://files.catbox.moe/bkse8m.jpg", video: "https://files.catbox.moe/u8eocl.MP4", hasVideo: true },
-            { id: 17, name: "HIGH SCHOOL THOTS $35", image: "https://www.image2url.com/r2/default/files/1788376246954-f77bfa68-0a45-49dd-a393-9799e0f889ba.jpg", video: "https://files.catbox.moe/gm5647.mp4", hasVideo: true },
+            { id: 17, name: "HIGH SCHOOL THOTS $35", image: "https://www.image2url.com/r2/default/files/1788376246954-f77bfa68-0a45-49dd-a393-9799e0f889ba.jpg", video: "https://files.catbox.moe/g[...]
             { id: 18, name: "ALL TEEN $70", image: "https://files.catbox.moe/d2m39n.jpg", video: "https://www.w3schools.com/html/mov_bbb.mp4", hasVideo: false },
             { id: 19, name: "SNAPGOD FULL $30", image: "https://files.catbox.moe/wfizot.webp", video: "https://files.catbox.moe/ar337t.mp4", hasVideo: true },
             { id: 20, name: "BLACKMAIL $35", image: "https://files.catbox.moe/ngsb4p.jpg", video: "", hasVideo: false },
             { id: 21, name: "ANXIUS PANDA $30", image: "https://files.catbox.moe/o0vlv8.jpg", video: "https://files.catbox.moe/rqwmjl.mp4", hasVideo: true },
-            { id: 22, name: "ALL CONTENT🔥 $120", image: "https://www.image2url.com/r2/default/images/1788356758995-ccb48819-2da4-4aef-b43c-7f8bdbe42c04.png", video: "https://www.image2url.com/r2/default/videos/1788356999797-ce33788a-3edd-42b1-bf33-37503c0a2475.mp4", hasVideo: true },
+            { id: 22, name: "ALL CONTENT🔥 $120", image: "https://www.image2url.com/r2/default/images/1788356758995-ccb48819-2da4-4aef-b43c-7f8bdbe42c04.png", video: "https://www.image2url.com/[...]
         ];
 
 
